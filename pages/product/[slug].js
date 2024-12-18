@@ -37,7 +37,7 @@ const ProductDetails = ({ product, products }) => {
 
         <div className="product-detail-desc">
           <h1>{name}</h1>
-          <div className="reviews">
+          {/* <div className="reviews">
             <div>
               <AiFillStar />
               <AiFillStar />
@@ -48,10 +48,10 @@ const ProductDetails = ({ product, products }) => {
             <p>
               (20)
             </p>
-          </div>
+          </div> */}
           <h4>Details: </h4>
           <p>{details}</p>
-          <p className="price">${price}</p>
+          <p className="price">Ksh {price.toLocaleString()}</p>
           <div className="quantity">
             <h3>Quantity:</h3>
             <p className="quantity-desc">

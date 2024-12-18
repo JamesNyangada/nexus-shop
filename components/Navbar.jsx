@@ -11,7 +11,20 @@ const Navbar = () => {
   return (
     <div className="navbar-container">
       <p className="logo">
-        <Link href="/">Nexus Shop</Link>
+        <Link href="/">
+          <img src="/assets/3.png" alt="logo" width={100} height={100}/>
+        </Link>
+      </p>
+      <p className="nav-links">
+      <ul>
+        <li>
+          <Link href="https://thenexusfit.com/">
+            Go back Home
+          </Link>
+        </li>
+        
+      </ul>
+        
       </p>
 
       <button type="button" className="cart-icon" onClick={() => setShowCart(true)}>
