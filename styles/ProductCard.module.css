@@ -52,5 +52,12 @@
     font-weight: 700;
     color: var(--color-indigo-600);
   }
+  @media(max-width: 600px) {
+    .product-card {
+        max-width: 600px;
+        margin: 0 auto;
+        padding: 0 1rem;
+    }
+  }
   
   

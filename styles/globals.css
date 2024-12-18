@@ -824,4 +824,37 @@ margin-top: 160px;
 .heading-page{
   font-size: 20px;
   font-weight: 500;
+  margin-left: 20px;
+}
+
+@media(max-width: 600px){
+  .pagination{
+    display: flex;
+    flex-direction: column;
+    grid-template-columns: 1fr 1fr;
+    justify-content: center;
+    gap: 10px;
+    margin-left: 30%;
+  }
+ 
+  .heading-page{
+    font-size: 16px;
+  }
+  .button {
+    background: #ff1919;
+    border: none;
+    padding: 5px 10px;
+    display: inline-block;
+    font-size: 10px;
+    font-weight: 400;
+    width: 100px;
+    text-transform: uppercase;
+    cursor: pointer;
+    transform: skew(-21deg);
+  }
+  
+  .span {
+    display: inline-block;
+    transform: skew(21deg);
+  }
 }

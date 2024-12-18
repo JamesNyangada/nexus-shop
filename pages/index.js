@@ -35,7 +35,7 @@ const Home = ({ products, bannerData }) => {
       </div>
 
       {/* Pagination Controls */}
-      <div style={{ marginTop: '2rem', textAlign: 'center' }}>
+      <div style={{ marginTop: '2rem',  }} className='pagination'>
         <button
           onClick={() => handlePageChange(1)}
           disabled={currentPage === 1}
@@ -54,9 +54,9 @@ const Home = ({ products, bannerData }) => {
           <span className='span'>Previous</span>
         </button>
 
-        <span className='heading-page'>
+        <div className='heading-page'>
           Page {currentPage} of {totalPages}
-        </span>
+        </div>
 
         <button
           onClick={() => handlePageChange(currentPage + 1)}
