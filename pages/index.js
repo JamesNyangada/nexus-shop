@@ -28,7 +28,7 @@ const Home = ({ products, bannerData }) => {
         <p>Our simple yet diverse shop</p>
       </div>
 
-      <div style={{ display: 'grid', gap: '1.5rem', gridTemplateColumns: 'repeat(auto-fill, minmax(250px, 1fr))' }}>
+      <div className='product-grid'>
         {paginatedProducts.map((product) => (
           <ProductCard key={product._id} product={product} />
         ))}
