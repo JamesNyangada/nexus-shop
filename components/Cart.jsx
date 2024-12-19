@@ -1,16 +1,60 @@
-import React, { useRef } from 'react';
+import React, { useRef, useState } from 'react';
 import Link from 'next/link';
 import { AiOutlineMinus, AiOutlinePlus, AiOutlineLeft, AiOutlineShopping } from 'react-icons/ai';
 import { TiDeleteOutline } from 'react-icons/ti';
 import toast from 'react-hot-toast';
+import dynamic from 'next/dynamic'; // Import dynamic for client-side loading
+
 
 import { useStateContext } from '../context/StateContext';
 import { urlFor } from '../lib/client';
-import getStripe from '../lib/getStripe';
+import getStripe from '../lib/getStripe'
+
+
+// Dynamically import PaystackButton with SSR disabled
+const PaystackButton = dynamic(() => import('react-paystack').then((mod) => mod.PaystackButton), {
+  ssr: false,
+});;
 
 const Cart = () => {
   const cartRef = useRef();
   const { totalPrice, totalQuantities, cartItems, setShowCart, toggleCartItemQuanitity, onRemove } = useStateContext();
+
+  const [email, setEmail] = useState('');
+
+  const publicKey = process.env.NEXT_PUBLIC_PAYSTACK_PUBLIC_KEY; // Add your Paystack public key to .env file
+
+  const handlePaystackSuccess = async (reference) => {
+    try {
+      const response = await fetch('/api/verify-payment', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ reference: reference.reference }),
+      });
+
+      const data = await response.json();
+
+      if (data.success) {
+        setPaymentStatus('Payment successful!');
+        toast.success('Payment successful!');
+      } else {
+        setPaymentStatus('Payment verification failed!');
+        toast.error('Payment verification failed!');
+      }
+    } catch (error) {
+      setPaymentStatus('Error verifying payment!');
+      toast.error('Error verifying payment!');
+    }
+  };
+
+  const handlePaystackClose = () => {
+    setPaymentStatus('Payment window closed.');
+    toast.error('Payment window closed.');
+  };
+
+
 
   const handleCheckout = async () => {
     const stripe = await getStripe();
@@ -97,10 +141,29 @@ const Cart = () => {
               <h3>Subtotal:</h3>
               <h3>ksh {totalPrice.toLocaleString()}</h3>
             </div>
+            {/* Email input for collecting user's email */}
+            <div className="email-input">
+            <input
+               type="email"
+              placeholder="Enter your email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              required
+              className="email-field"
+              />
+            </div>
+
             <div className="btn-container">
-              <button type="button" className="btn" onClick={handleCheckout}>
-                Pay with Stripe
-              </button>
+              <PaystackButton
+                  publicKey={publicKey}
+                  email={email}
+                  amount={totalPrice * 100} // Convert to kobo
+                  currency="KES"
+                  text="Pay with Paystack"
+                  onSuccess={handlePaystackSuccess}
+                  onClose={handlePaystackClose}
+                  className='btn'
+              />
             </div>
           </div>
         )}
