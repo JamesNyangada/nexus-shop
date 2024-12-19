@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import PaystackPayment from '../components/PaystackPayment';
+import PaystackPayment from '../components/PaystackPayments';
 
 const Checkout = () => {
   const [email, setEmail] = useState('');
